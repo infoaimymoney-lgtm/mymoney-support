@@ -17,7 +17,7 @@ The short version:
 
 ### 1.1 SMS messages (personal & sensitive data)
 
-The app needs `READ_SMS` and `RECEIVE_SMS` permissions to do its core job: turn bank, UPI, credit-card, and mutual-fund SMS into a clean transaction list.
+The app needs the `READ_SMS` permission to do its core job: turn bank, UPI, credit-card, and mutual-fund SMS into a clean transaction list. It reads the inbox on demand and via a periodic background scan; it does **not** listen for incoming-SMS broadcasts (it does not request `RECEIVE_SMS`).
 
 It reads **only messages that look transactional**. Each SMS is parsed locally on your phone with a deterministic rules engine — there is no cloud parser. A message is kept only if it contains:
 
@@ -107,7 +107,7 @@ Whatever you send via your API key is governed by your provider's privacy and re
 
 | Permission | Why the app asks for it | Optional? |
 |---|---|---|
-| `READ_SMS`, `RECEIVE_SMS` | Read transactional SMS to build the dashboard (foreground and background). | No — without it the app cannot do its core job. You can revoke any time; existing data stays on your phone. |
+| `READ_SMS` | Read transactional SMS from the inbox to build the dashboard (on demand and via a periodic background scan). | No — without it the app cannot do its core job. You can revoke any time; existing data stays on your phone. |
 | `RECEIVE_BOOT_COMPLETED`, `WAKE_LOCK` | Re-arm the periodic background transaction scan after a restart. | Functional; tied to background scanning. |
 | `SCHEDULE_EXACT_ALARM`, `USE_EXACT_ALARM` | Deliver bill/reminder notifications on time. | Yes — disable notifications to stop. |
 | `POST_NOTIFICATIONS` | Show transaction and reminder notifications (Android 13+). | Yes — can be disabled in Settings → Notifications. |
